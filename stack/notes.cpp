@@ -1,75 +1,88 @@
 //                          Stack Notes
 
-//Implementation Of Stack Using Arraylist
+// Implementation Of Stack Using ArrayList
 #include <iostream>
 #include <vector>
 using namespace std;
 
-class Stack{
+class Stack
+{
 public:
-    vector<int> arratlist;
-    bool isEmpty(){
-        return arratlist.size() == 0;
+    vector<int> arraylist;
+    bool isEmpty()
+    {
+        return arraylist.size() == 0;
     }
 
-    void push(int val){
-        arratlist.push_back(val);
+    void push(int val)
+    {
+        arraylist.push_back(val);
     }
-    int pop(){
-        int top = arratlist.at(arratlist.size() - 1);
-        arratlist.pop_back();
+    int pop()
+    {
+        int top = arraylist.at(arraylist.size() - 1);
+        arraylist.pop_back();
         return top;
     }
 
-    int top(){
-        int top = arratlist.at(arratlist.size() - 1);
+    int top()
+    {
+        int top = arraylist.at(arraylist.size() - 1);
     }
 };
 
-int main(){
+int main()
+{
     Stack s1;
     s1.push(10);
     s1.push(20);
     s1.push(30);
     s1.pop();
     s1.push(40);
-    while(!s1.isEmpty()){
-        cout<<s1.top()<<endl;
+    while (!s1.isEmpty())
+    {
+        cout << s1.top() << endl;
         s1.pop();
     }
 }
-
 
 // Using Linked List
 #include <iostream>
 #include <vector>
 using namespace std;
 
-class Node {
+class Node
+{
 public:
     int data;
     Node *next;
-    Node(int val){
+    Node(int val)
+    {
         data = val;
         next = NULL;
     }
 };
 
-class StackLinkedList{
+class StackLinkedList
+{
 public:
     Node *head;
 
-    StackLinkedList(){
+    StackLinkedList()
+    {
         head = NULL;
     }
 
-    bool isEmpty(){
+    bool isEmpty()
+    {
         return head == NULL;
     }
-   
-    void push(int val){
+
+    void push(int val)
+    {
         Node *new_node = new Node(val);
-        if(head == NULL){
+        if (head == NULL)
+        {
             head = new_node;
             return;
         }
@@ -81,7 +94,8 @@ public:
         temp->next = new_node;
     }
 
-    void pop(){
+    void pop()
+    {
         Node *itr = head;
         while (itr->next->next != NULL)
         {
@@ -90,7 +104,8 @@ public:
         itr->next = NULL;
     }
 
-    int peak(){
+    int peek()
+    {
         Node *itr = head;
         int size = 0;
         while (itr != NULL)
@@ -98,21 +113,23 @@ public:
             size++;
             itr = itr->next;
         }
-        return (size - 1); 
+        return (size - 1);
     }
 
-    void display(){
+    void display()
+    {
         Node *itr = head;
-        while(itr != NULL){
-            cout<<itr->data<<"->";
+        while (itr != NULL)
+        {
+            cout << itr->data << "->";
             itr = itr->next;
-        }cout<<"NULL"<<endl;
+        }
+        cout << "NULL" << endl;
     }
-
-
 };
 
-int main(){
+int main()
+{
     StackLinkedList s1;
     s1.push(10);
     s1.push(20);
@@ -123,58 +140,56 @@ int main(){
     s1.push(60);
     s1.pop();
     s1.display();
-    cout<<s1.peak()<<endl;
-    
+    cout << s1.peek() << endl;
 }
 
-
-// Build In Stack
+// Built-in Stack
 #include <iostream>
 #include <stack>
 using namespace std;
 
-int main(){
+int main()
+{
     stack<int> s;
     s.push(10);
-    s.push(20); 
+    s.push(20);
     s.push(30);
     s.pop();
-    
 }
 
-
-// Button Of Stack 
+// Bottom Of Stack
 #include <iostream>
 #include <stack>
 using namespace std;
 
-void pushtobutton(stack<int> &tem_stack, int data){
-    if(tem_stack.empty()){
-      tem_stack.push(data);
-      return;  
+void push_to_bottom(stack<int> &tem_stack, int data)
+{
+    if (tem_stack.empty())
+    {
+        tem_stack.push(data);
+        return;
     }
 
     int top = tem_stack.top();
     tem_stack.pop();
-    pushtobutton(tem_stack , data);
+    push_to_bottom(tem_stack, data);
     tem_stack.push(top);
 }
 
-int main(){
+int main()
+{
     stack<int> s;
     s.push(10);
-    s.push(20); 
+    s.push(20);
     s.push(30);
 
-    pushtobutton(s , 0);
-    while(!s.empty())
+    push_to_bottom(s, 0);
+    while (!s.empty())
     {
         cout << s.top() << " ";
         s.pop();
     }
-    
 }
-
 
 // Reverse of Stack
 
@@ -182,83 +197,94 @@ int main(){
 #include <stack>
 using namespace std;
 
-
-int main(){
+int main()
+{
     stack<char> s;
     s.push('a');
-    s.push('b'); 
+    s.push('b');
     s.push('c');
-    
-    while(!s.empty())
+
+    while (!s.empty())
     {
         cout << s.top() << " ";
         s.pop();
     }
-    
 }
 
-
-// Reverse An Stack Without Using Any Extra Space 
-void push_buttom(stack <char> &s , char data){
-    if(s.empty()){
+// Reverse A Stack Without Using Any Extra Space
+void push_to_bottom(stack<char> &s, char data)
+{
+    if (s.empty())
+    {
         s.push(data);
         return;
     }
 
     char top = s.top();
     s.pop();
-    push_buttom(s , data);
+    push_to_bottom(s, data);
     s.push(top);
 }
 
-void StringReverse(stack <char> &s){
-    if(s.empty()){
+void StringReverse(stack<char> &s)
+{
+    if (s.empty())
+    {
         return;
     }
     char top = s.top();
     s.pop();
     StringReverse(s);
-    push_buttom(s , top);
+    push_to_bottom(s, top);
 }
 
-void PrintStack(stack <char> s){
-    while(!s.empty())
+void PrintStack(stack<char> s)
+{
+    while (!s.empty())
     {
         cout << s.top() << " ";
         s.pop();
-    }cout<<endl;
+    }
+    cout << endl;
 }
 
-int main(){
+int main()
+{
     stack<char> s;
     s.push('a');
-    s.push('b'); 
+    s.push('b');
     s.push('c');
 
-    cout<<"Before Reverse"<<endl;
+    cout << "Before Reverse" << endl;
     PrintStack(s);
-    
+
     StringReverse(s);
-    
-    cout<<"After Reverse"<<endl;
-    PrintStack(s);   
+
+    cout << "After Reverse" << endl;
+    PrintStack(s);
 }
 
 // Stock Span Problem
 
-void stock_span(vector <int> &stock , vector <int> &span){
-    stack <int> s;
+void stock_span(vector<int> &stock, vector<int> &span)
+{
+    stack<int> s;
     span[0] = 1;
     s.push(0);
 
-    for(int i = 1 ; i < stock.size() ; i++){
+    for (int i = 1; i < stock.size(); i++)
+    {
         int curr_price = stock[i];
-        while(!s.empty() && curr_price > stock[s.top()]){
+        while (!s.empty() && curr_price > stock[s.top()])
+        {
             s.pop();
         }
-        if(s.empty()){
+        if (s.empty())
+        {
             span[i] = i + 1;
-        }else {
+        }
+        else
+        {
             int prevhigh = s.top();
             span[i] = i - prevhigh;
         }
@@ -267,127 +293,163 @@ void stock_span(vector <int> &stock , vector <int> &span){
     }
 }
 
-int main(){
+int main()
+{
     stack<int> s;
-    vector<int> stock = {100 , 80 , 60 , 70 , 60 , 85 , 100};
+    vector<int> stock = {100, 80, 60, 70, 60, 85, 100};
     int stock_s = stock.size();
     vector<int> span(stock_s);
-    stock_span(stock , span);
+    stock_span(stock, span);
 
-    for(int i = 0 ; i < stock_s ; i++){
-        cout<<span[i]<<" ";
-    }cout<<endl;
+    for (int i = 0; i < stock_s; i++)
+    {
+        cout << span[i] << " ";
+    }
+    cout << endl;
 }
-
 
 // Next Greater Element
 
-int main(){
-    vector<int> arr = {6 ,8 ,0 ,1 ,3};
+int main()
+{
+    vector<int> arr = {6, 8, 0, 1, 3};
     int n = arr.size() - 1;
     vector<int> next_arr(arr.size());
     stack<int> s;
-   
-    for(int i = n ; i >= 0 ; i--){
-        while(!s.empty() && arr[s.top()] <= arr[i]){
+
+    for (int i = n; i >= 0; i--)
+    {
+        while (!s.empty() && arr[s.top()] <= arr[i])
+        {
             s.pop();
         }
-        if(s.empty()){
+        if (s.empty())
+        {
             next_arr[i] = -1;
-        }else{
+        }
+        else
+        {
             next_arr[i] = arr[s.top()];
         }
-        
+
         s.push(i);
-        
     }
 
-    for(int i = 0 ; i < arr.size()  ; i++){
-        cout<<next_arr[i]<<" ";
-    }cout<<endl;
-  
+    for (int i = 0; i < arr.size(); i++)
+    {
+        cout << next_arr[i] << " ";
+    }
+    cout << endl;
 }
 
-
-//Valid Parenthesis
-bool check_valid_parenthese(string str){
+// Valid Parentheses
+bool check_valid_parentheses(string str)
+{
     stack<char> q;
     int n = str.length();
 
-    for(int i = 0 ; i < n ; i++){
-        if(str[i] == '{' || str[i] == '[' || str[i] == '('){
+    for (int i = 0; i < n; i++)
+    {
+        if (str[i] == '{' || str[i] == '[' || str[i] == '(')
+        {
             q.push(str[i]);
-        }else{
-            if(q.empty()){
+        }
+        else
+        {
+            if (q.empty())
+            {
                 return false;
             }
             int top = q.top();
-            if((top == '{' && str[i] == '}') || (top == '(' && str[i] == ')') || (top == '[' && str[i] == ']')){
+            if ((top == '{' && str[i] == '}') || (top == '(' && str[i] == ')') || (top == '[' && str[i] == ']'))
+            {
                 q.pop();
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
     }
 
-    if(q.empty()){
+    if (q.empty())
+    {
         return true;
-    }else {
+    }
+    else
+    {
         return false;
     }
 }
 
-int main(){
+int main()
+{
     string sample_string = "{{[(]}}";
-    if(!check_valid_parenthese(sample_string)){
-        cout<<"Not Valid"<<endl;
-    }else {
-        cout<<"Valid"<<endl;
+    if (!check_valid_parentheses(sample_string))
+    {
+        cout << "Not Valid" << endl;
+    }
+    else
+    {
+        cout << "Valid" << endl;
     }
 }
 
-// Duplicate Parenthesis
+// Duplicate Parentheses
 
-bool is_oprator(char oper){
-    if(oper == '+' || oper == '-' || oper == '/' || oper == '%'){
+bool is_operator(char oper)
+{
+    if (oper == '+' || oper == '-' || oper == '/' || oper == '%')
+    {
         return true;
     }
     return false;
 }
 
-//Revisit This Question 
-bool check_duplicate_parenthese(string str){
+// Revisit This Question
+bool check_duplicate_parentheses(string str)
+{
     stack<char> q;
     int n = str.length();
 
-    for(int i = 0 ; i < n ; i++){
-       if(str[i] == '(' || str[i] == '{' || str[i] == '[' || is_oprator(str[i]) || isdigit(str[i])){
-        q.push(str[i]);
-       }else{
-        int count = 0;
-        int top = q.top();
-        while (!q.empty() && top != ')')
+    for (int i = 0; i < n; i++)
+    {
+        if (str[i] == '(' || str[i] == '{' || str[i] == '[' || is_operator(str[i]) || isdigit(str[i]))
         {
-            if((top == '(' && str[i] == ')') || (top == '{' && str[i] == '}') || (top == '[' && str[i] == ']')){
-                if(count < 1){
-                    return true;
+            q.push(str[i]);
+        }
+        else
+        {
+            int count = 0;
+            int top = q.top();
+            while (!q.empty() && top != ')')
+            {
+                if ((top == '(' && str[i] == ')') || (top == '{' && str[i] == '}') || (top == '[' && str[i] == ']'))
+                {
+                    if (count < 1)
+                    {
+                        return true;
+                    }
                 }
-            }else{
-                q.pop();
-                count++;
+                else
+                {
+                    q.pop();
+                    count++;
+                }
             }
         }
-        
-       }
     }
-
 }
 
-int main(){
+int main()
+{
     string sample_string = "{{[(]}}";
-    if(!check_duplicate_parenthese(sample_string)){
-        cout<<"Not Valid"<<endl;
-    }else {
-        cout<<"Valid"<<endl;
+    if (!check_duplicate_parentheses(sample_string))
+    {
+        cout << "Not Valid" << endl;
+    }
+    else
+    {
+        cout << "Valid" << endl;
     }
 }

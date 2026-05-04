@@ -51,7 +51,7 @@ public:
         return new_node;
     }
 
-    vector<int> kth_level_tree_itrative(Node *root, int k)
+    vector<int> kth_level_tree_iterative(Node *root, int k)
     {
         if (root == NULL)
         {

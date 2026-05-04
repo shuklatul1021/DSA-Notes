@@ -1,46 +1,56 @@
 #include <iostream>
 using namespace std;
 
-class Node{
+class Node
+{
 public:
     int data;
     Node *next;
-    Node(int value){
+    Node(int value)
+    {
         data = value;
         next = NULL;
     }
 };
 
-
-class LinkedList{
+class LinkedList
+{
 public:
     Node *head;
-    LinkedList(){
+    LinkedList()
+    {
         head = NULL;
     }
 
-    void InsertLinkedList(int data){
+    void InsertLinkedList(int data)
+    {
         Node *New_Node = new Node(data);
-        if(head == NULL){
+        if (head == NULL)
+        {
             head = New_Node;
             return;
         }
         Node *temp = head;
-        while(temp->next != NULL){
+        while (temp->next != NULL)
+        {
             temp = temp->next;
         }
         temp->next = New_Node;
     }
 
-    void Display(){
+    void Display()
+    {
         Node *temp = head;
-        while(temp != NULL){
-            cout<<temp->data<<"->";
+        while (temp != NULL)
+        {
+            cout << temp->data << "->";
             temp = temp->next;
-        }cout<<"NULL"<<endl;
+        }
+        cout << "NULL" << endl;
     }
 
-    bool PalindromLinkedList(){
+    bool PalindromeLinkedList()
+    {
         int size = 0;
         Node *itr = head;
         while (itr != NULL)
@@ -48,23 +58,23 @@ public:
             itr = itr->next;
             size += 1;
         }
-        int half = (size/2) - 1;
+        int half = (size / 2) - 1;
 
-        int check_postioning = 0;
-        Node *reverse_itrator = head;
+        int check_positioning = 0;
+        Node *reverse_iterator = head;
 
-        while (check_postioning < half)
+        while (check_positioning < half)
         {
-            reverse_itrator = reverse_itrator->next;
-            check_postioning += 1;
+            reverse_iterator = reverse_iterator->next;
+            check_positioning += 1;
         }
 
-        Node* secondHalf = reverse_itrator->next;
-        reverse_itrator->next = NULL; 
+        Node *secondHalf = reverse_iterator->next;
+        reverse_iterator->next = NULL;
 
-        Node* prev = NULL;
-        Node* curr = secondHalf;
-        Node* next = NULL;
+        Node *prev = NULL;
+        Node *curr = secondHalf;
+        Node *next = NULL;
 
         while (curr != NULL)
         {
@@ -73,17 +83,20 @@ public:
             prev = curr;
             curr = next;
         }
-        reverse_itrator->next = prev;
+        reverse_iterator->next = prev;
 
         Node *firstHalf = head;
-        reverse_itrator = reverse_itrator->next;
-        
-        while (firstHalf->next != NULL && reverse_itrator->next !=NULL)
+        reverse_iterator = reverse_iterator->next;
+
+        while (firstHalf->next != NULL && reverse_iterator->next != NULL)
         {
-            if(firstHalf->data == reverse_itrator->data){
+            if (firstHalf->data == reverse_iterator->data)
+            {
                 firstHalf = firstHalf->next;
-                reverse_itrator = reverse_itrator->next;
-            }else{
+                reverse_iterator = reverse_iterator->next;
+            }
+            else
+            {
                 return false;
             }
         }
@@ -91,7 +104,8 @@ public:
     }
 };
 
-int main(void){
+int main(void)
+{
     LinkedList L1;
     L1.InsertLinkedList(10);
     L1.InsertLinkedList(20);
@@ -99,6 +113,5 @@ int main(void){
     L1.InsertLinkedList(30);
     L1.InsertLinkedList(20);
     L1.Display();
-    cout<<L1.PalindromLinkedList()<<endl;
+    cout << L1.PalindromeLinkedList() << endl;
 }
-

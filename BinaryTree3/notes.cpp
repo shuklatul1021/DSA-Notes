@@ -51,7 +51,7 @@ public:
         return new_node;
     }
 
-    vector<int> kth_level_tree_itrative(Node *root, int k)
+    vector<int> kth_level_tree_iterative(Node *root, int k)
     {
         if (root == NULL)
         {
@@ -112,11 +112,11 @@ public:
     }
 
     /**
-     * Lowest common Ancestor
+     * Lowest Common Ancestor
      * Ancestor of a node is the node which is present in the path from root to that node.
      * Lowest common ancestor of two nodes is the node which is present in the path from root to both nodes and is farthest from the root.
      */
-    // Approch 1
+    // Approach 1
     bool getPath(Node *root, int node, vector<int> &path)
     {
         if (root == NULL)
@@ -138,7 +138,7 @@ public:
         return false;
     }
 
-    int loweset_common_ancestor(Node *root, int n1, int n2)
+    int lowest_common_ancestor(Node *root, int n1, int n2)
     {
         vector<int> path1, path2;
         getPath(root, n1, path1);
@@ -155,8 +155,8 @@ public:
         return path1[i - 1];
     }
 
-    // Approch 2
-    int loweset_common_ancestor_approch2(Node *root, int n1, int n2)
+    // Approach 2
+    int lowest_common_ancestor_approach2(Node *root, int n1, int n2)
     {
         if (root == NULL)
         {
@@ -167,8 +167,8 @@ public:
             return root->data;
         }
 
-        int left_lca = loweset_common_ancestor_approch2(root->left, n1, n2);
-        int right_lca = loweset_common_ancestor_approch2(root->right, n1, n2);
+        int left_lca = lowest_common_ancestor_approach2(root->left, n1, n2);
+        int right_lca = lowest_common_ancestor_approach2(root->right, n1, n2);
 
         if (left_lca == -1)
         {
@@ -183,7 +183,7 @@ public:
 
     // Min Distance Between Two Nodes
 
-    Node *Node_loweset_common_ancestor_approch2(Node *root, int n1, int n2)
+    Node *Node_lowest_common_ancestor_approach2(Node *root, int n1, int n2)
     {
         if (root == NULL)
         {
@@ -194,8 +194,8 @@ public:
             return root;
         }
 
-        Node *left_lca = Node_loweset_common_ancestor_approch2(root->left, n1, n2);
-        Node *right_lca = Node_loweset_common_ancestor_approch2(root->right, n1, n2);
+        Node *left_lca = Node_lowest_common_ancestor_approach2(root->left, n1, n2);
+        Node *right_lca = Node_lowest_common_ancestor_approach2(root->right, n1, n2);
 
         if (left_lca == NULL)
         {
@@ -237,7 +237,7 @@ public:
 
     int min_distance_between_node(Node *root, int n1, int n2)
     {
-        Node *lca = Node_loweset_common_ancestor_approch2(root, n1, n2);
+        Node *lca = Node_lowest_common_ancestor_approach2(root, n1, n2);
         int dis1 = lcaDist(lca, n1);
         int dis2 = lcaDist(lca, n2);
 

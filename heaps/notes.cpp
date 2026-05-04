@@ -1,9 +1,9 @@
 //                         Heaps/Priority Queue Notes
 //                         ------------------------------
-// Heaps Is Also known As Priority Queue
+// Heaps Is Also Known As Priority Queue
 /**
- * Priority Queue : 
- * A priority queue is an abstract data type that operates similarly to a regular queue or stack data structure, but where each element has a "priority" associated with it. 
+ * Priority Queue :
+ * A priority queue is an abstract data type that operates similarly to a regular queue or stack data structure, but where each element has a "priority" associated with it.
  * In a priority queue, an element with high priority is served before an element with low priority. If two elements have the same priority, they are served according to their order in the queue.
  */
 
@@ -11,10 +11,10 @@
 #include <queue>
 using namespace std;
 
-
-int main(){
+int main()
+{
     /**
-     * Queue Structure 
+     * Queue Structure
      *  [10, 20, 30]
      */
     /**
@@ -24,22 +24,21 @@ int main(){
      */
     // Ascending Order Max Heap
     priority_queue<int> max_heap;
-    max_heap.push(10); 
+    max_heap.push(10);
     max_heap.push(30);
     max_heap.push(20);
-    cout<<"Top Element Of The Max Heap : "<<max_heap.top()<<endl;
+    cout << "Top Element Of The Max Heap : " << max_heap.top() << endl;
     max_heap.pop();
-    cout<<"Top Element Of The Max Heap : "<<max_heap.top()<<endl;
+    cout << "Top Element Of The Max Heap : " << max_heap.top() << endl;
     // Descending Order Max Heap
     priority_queue<int, vector<int>, greater<int>> max_heap2;
-    max_heap2.push(10); 
+    max_heap2.push(10);
     max_heap2.push(30);
     max_heap2.push(20);
-    cout<<"Top Element Of The Max Heap : "<<max_heap2.top()<<endl;
+    cout << "Top Element Of The Max Heap : " << max_heap2.top() << endl;
     max_heap2.pop();
-    cout<<"Top Element Of The Max Heap : "<<max_heap2.top()<<endl;
+    cout << "Top Element Of The Max Heap : " << max_heap2.top() << endl;
 }
-
 
 //                              Heap
 /**
@@ -53,70 +52,74 @@ int main(){
  *              Children >= Parent
  * Min Heap : A Binary Tree In Which Every Node Is Less Than Or Equal To Its Children
  *              Children <= Parent
-*/
+ */
 /**
  * IMPORTANT NOTE :
- * Whey Heap is Not Implemented Using Class And Object ?
+ * Why Heap Is Not Implemented Using Class And Object?
  * Ans : Because Heap Is A Data Structure Which Is Used To Implement Priority Queue And It Is Used In Many Algorithms Like Dijkstra's Algorithm, Prim's Algorithm, Huffman Coding, etc. And It Is Not A Data Structure Which Is Used To Store Data Like Linked List, Stack, Queue, etc. So It Is Not Implemented Using Class And Object.
  *          It Is Implemented Using Array Because It Is A Complete Binary Tree And It Can Be Easily Represented Using Array. And It Is Also Easy To Implement The Heap Operations Like Insertion, Deletion, etc. Using Array.
  *          It Is Also Used To Implement The Heap Sort Algorithm Which Is A Comparison Based Sorting Algorithm And It Is Not A Stable Sorting Algorithm. And It Is Also Used To Implement The Priority Queue Data Structure Which Is Used In Many Algorithms Like Dijkstra's Algorithm, Prim's Algorithm, Huffman Coding, etc.
  */
 
- /**
-  * Heap As an ArrayList
-  *          2
-  *        /   \
-  *      3       4
-  *    /   \     
-  *   5       6
-  * 
-  * Array Representation Of The Above Heap : [2, 3, 4, 5, 6]
-  * 
-  * Property Of The Heap :
-  *        (node) idx = i
-  *        left child idx = 2*i + 1
-  *        right child idx = 2*i + 2
-  * 
-  * Last Postion Of The Non Leaf Node : (n/2) - 1
-  */
+/**
+ * Heap As an ArrayList
+ *          2
+ *        /   \
+ *      3       4
+ *    /   \
+ *   5       6
+ *
+ * Array Representation Of The Above Heap : [2, 3, 4, 5, 6]
+ *
+ * Property Of The Heap :
+ *        (node) idx = i
+ *        left child idx = 2*i + 1
+ *        right child idx = 2*i + 2
+ *
+ * Last Position Of The Non-Leaf Node : (n/2) - 1
+ */
 /**
  * Insertion In Heap
- *        2                     arr = [2, 3, 4, 5, 10]          
- *      /   \                   
+ *        2                     arr = [2, 3, 4, 5, 10]
+ *      /   \
  *    3       4
  *   /  \
  *  5    10
- * 
+ *
  * Assuming Inserted Element Is  : 1
  * Step 1 : Insert The Element At The End Of The Heap
  *           arr = [2, 3, 4, 5, 10, 1]
- * 
+ *
  * Step 2 : Compare The Inserted Element With Its Parent And Swap If The Inserted Element Is Greater Than Its Parent (For Max Heap) Or Less Than Its Parent (For Min Heap)
  *          arr = [2, 3, 4, 5, 10, 1] -> Compare 1 With Its Parent 4 -> Swap -> arr = [2, 3, 1, 5, 10, 4] -> Compare 1 With Its Parent 3 -> Swap -> arr = [2, 1, 3, 5, 10, 4] -> Compare 1 With Its Parent 2 -> Swap -> arr = [1, 2, 3, 5, 10, 4]
  *          Find The Parent Index : (i-1)/2
  *          And Compare And If Smaller Than Parent Then Swap
- * 
+ *
  */
 // Insertion in Heap
-void insert_heap(vector<int> &heap_array , int insert){
-    int postion = heap_array.size() - 1;
-    int parent_index = (postion - 1) / 2;
-    while(heap_array[postion] < heap_array[parent_index]){
-        swap(heap_array[postion],heap_array[parent_index]);
+void insert_heap(vector<int> &heap_array, int insert)
+{
+    int position = heap_array.size() - 1;
+    int parent_index = (position - 1) / 2;
+    while (heap_array[position] < heap_array[parent_index])
+    {
+        swap(heap_array[position], heap_array[parent_index]);
     }
-} 
+}
 
 // Get Min In Heap
-int min_heap(vector<int> &heap_array){
+int min_heap(vector<int> &heap_array)
+{
     return heap_array[0];
-} 
+}
 
 /**
  * Heapify
- * 
-*/
-void Heapify(int i , vector<int> &heap_array){
-    // Heapify Function 
+ *
+ */
+void Heapify(int i, vector<int> &heap_array)
+{
+    // Heapify Function
     /**
      * root = i
      * left = 2 * i + 1
@@ -125,26 +128,29 @@ void Heapify(int i , vector<int> &heap_array){
      * if smallest != root then swap and heapify the smallest index
      * Time Complexity : O(log n) because in worst case we have to heapify the entire height of the heap which is log n
      * Space Complexity : O(1) because we are not using any extra space
-    */
+     */
     int left = 2 * i + 1;
     int right = 2 * i + 2;
-    int mididx = i;
-    if(left < heap_array.size() && heap_array[mididx] > heap_array[right]){
-        mididx = right;
+    int minidx = i;
+    if (left < heap_array.size() && heap_array[minidx] > heap_array[right])
+    {
+        minidx = right;
     }
 
-    if(mididx != i){
-        swap(heap_array[i] , heap_array[mididx]);
+    if (minidx != i)
+    {
+        swap(heap_array[i], heap_array[minidx]);
     }
 }
 
-void delete_heap(vector<int> &heap_array){
-    //  three Step Proccess
+void delete_heap(vector<int> &heap_array)
+{
+    //  three-step process
     // First and last node swap
     int n = heap_array.size() - 1;
     swap(heap_array[0], heap_array[n]);
     // Second Remove Last Index
-    heap_array.pop_back();  
+    heap_array.pop_back();
     // Heapify Function
     Heapify(0, heap_array);
 }
@@ -154,49 +160,56 @@ void delete_heap(vector<int> &heap_array){
 #include <vector>
 using namespace std;
 
-void Heapify(int i , vector<int> &heap_array, int n){
+void Heapify(int i, vector<int> &heap_array, int n)
+{
     int left = 2 * i + 1;
     int right = 2 * i + 2;
     int maxidx = i;
-    if(left < n && heap_array[left] > heap_array[maxidx]){
+    if (left < n && heap_array[left] > heap_array[maxidx])
+    {
         maxidx = left;
     }
 
-    if(right < n && heap_array[right] > heap_array[maxidx]){
+    if (right < n && heap_array[right] > heap_array[maxidx])
+    {
         maxidx = right;
     }
 
-    if(maxidx != i){
-        swap(heap_array[i] , heap_array[maxidx]);
+    if (maxidx != i)
+    {
+        swap(heap_array[i], heap_array[maxidx]);
         Heapify(maxidx, heap_array, n);
     }
 }
 
-void heap_sort(vector<int> &arr_vec){
-    /** 
+void heap_sort(vector<int> &arr_vec)
+{
+    /**
      * For Ascending Order Max Heap
-     *  For Decending Order Min Heap
+     *  For Descending Order Min Heap
      * Getting Non leaf Node
      *                  1
      *                /   \
      *               2     4
      *             /   \
      *            5     3
-     * Non Leaf Node = [2 , 1];
-    */
-    // Step 1 : Convert Array To Build Max heap 
+     * Non-Leaf Node = [2 , 1];
+     */
+    // Step 1 : Convert Array To Build Max heap
     int n = arr_vec.size();
-    for(int i = n/2; i >=0; i--){
-        Heapify(i , arr_vec, n);
+    for (int i = n / 2; i >= 0; i--)
+    {
+        Heapify(i, arr_vec, n);
     }
     // Step 2 : Push Largest At end
-    for(int i = n-1; i>0; i--){
-        swap(arr_vec[0] , arr_vec[i]);
+    for (int i = n - 1; i > 0; i--)
+    {
+        swap(arr_vec[0], arr_vec[i]);
         Heapify(0, arr_vec, i);
     }
 }
 
-// Nearby cars 
+// Nearby cars
 class Points
 {
 public:
@@ -238,23 +251,28 @@ int main()
 }
 
 // Connect N Ropes With Minimum Cost
-class Cost{
+class Cost
+{
 public:
     int cost;
-    Cost(int u_cost){
+    Cost(int u_cost)
+    {
         this->cost = u_cost;
     }
 
-    bool operator<(const Cost &c) const{
+    bool operator<(const Cost &c) const
+    {
         return this->cost > c.cost;
     }
 };
 
-int main(){
+int main()
+{
     vector<int> ropes = {2, 3, 3, 4, 6};
 
     priority_queue<Cost> pq;
-    for(int i = 0; i < ropes.size(); i++){
+    for (int i = 0; i < ropes.size(); i++)
+    {
         Cost c(ropes[i]);
         pq.push(c);
     }
@@ -270,18 +288,14 @@ int main(){
         pq.push(Cost(min.cost + max.cost));
     }
 
-    cout<<"Cost : "<<cost<<endl;
-
+    cout << "Cost : " << cost << endl;
 }
 
-// Weakest Soldier 
+// Weakest Soldier
 /**
- * 
+ *
  * TODO
  */
-
-
-
 
 /**
  * Sliding Window Maximum
@@ -289,7 +303,7 @@ int main(){
  *   Maximum of all subarrays of size k.
  *   Input: arr[] = {1, 3, -1, -3, 5, 3, 6, 7}, k = 3
  *   Output: 3 3 5 5 6 7
- *  -- Bruth Force
+ *  -- Brute Force
  *          vector<int> sample_vector = {1, 3, -1, -3, 5, 3, 6, 7};
             vector <int> result_vector;
             int k = 3;
@@ -306,62 +320,71 @@ int main(){
             }cout<<endl;
 */
 
-class Pair{
+class Pair
+{
 public:
     int val;
     int idx;
-    Pair(int val, int idx){
+    Pair(int val, int idx)
+    {
         this->val = val;
         this->idx = idx;
     }
-    
-    bool operator<(const Pair &c) const{
+
+    bool operator<(const Pair &c) const
+    {
         return this->val < c.val;
     }
 };
 
-int main(){
+int main()
+{
     /**
      * Max Size Of Resultant Array Size:
-     * (n - k + 1) 
+     * (n - k + 1)
      * Where:
      *  n = size of Given Array
-     *  k = Window Size 
-    */
-   /**
-    * Algo Step:
-    *  1. add k nums to pq
-    *  2.   a-> pq.peek() -> wind[0];
-    *       b-> while(pq.top().idx <= (i-k)){
-    *               pq.pop();
-    *           }
-    *           pq.add(curr);
-    *           wind[] = pq.peak();
-    */
+     *  k = Window Size
+     */
+    /**
+     * Algo Step:
+     *  1. add k nums to pq
+     *  2.   a-> pq.peek() -> wind[0];
+     *       b-> while(pq.top().idx <= (i-k)){
+     *               pq.pop();
+     *           }
+     *           pq.add(curr);
+     *           wind[] = pq.peek();
+     */
 
     vector<int> arr = {1, 3, -1, -3, 5, 3, 6, 7};
     int k = 3;
     priority_queue<Pair> pq;
     int n = arr.size();
     vector<int> result(n - k + 1);
-    for(int i = 0 ; i < k; i++){
+    for (int i = 0; i < k; i++)
+    {
         Pair curr_pair(arr[i], i);
         pq.push(curr_pair);
     }
 
     result[0] = pq.top().val;
-    for(int i = k; i < n; i++){
-        while(pq.top().idx <= (i-k)){
+    for (int i = k; i < n; i++)
+    {
+        while (pq.top().idx <= (i - k))
+        {
             pq.pop();
         }
         Pair curr_pair(arr[i], i);
         pq.push(curr_pair);
-        result[i-k+1] = pq.top().val;
+        result[i - k + 1] = pq.top().val;
     }
 
-    for(int i = 0; i < result.size(); i++){
-        cout<<result[i]<<" ";
-    }cout<<endl;
+    for (int i = 0; i < result.size(); i++)
+    {
+        cout << result[i] << " ";
+    }
+    cout << endl;
 
     return 0;
-} 
+}
