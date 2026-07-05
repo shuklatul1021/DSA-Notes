@@ -548,7 +548,8 @@ int main(void){
 //               Shortest Path Algorithum (BellmanFord Algorithm)
 /**
  * It Can Work Solve The Problem Of Dijkstra's Algorithm of Negative Failure
- * Dynamic Programming Algirothum
+ * Dynamic Programming Algorithum`
+ * Time Complexcity : O(V.E)
  */
 
 void BellmanFordAlgorithm(vector<vector<Edge>>& Graph, int src,int n){
@@ -745,9 +746,9 @@ void KosarajuAlgorithm(vector<vector<Edge>>& Graph, int n){
         st.pop();
         if(!NewVisited[curr]){
             DFS(reverseGraph,curr,NewVisited);    
-            cout<<endl;    
+            cout<<endl;     
         }
-    }
+    } 
 }
 
 int main(void){
@@ -769,3 +770,57 @@ int main(void){
 
 //              Bridge in Graph (Tarjan's Algorithm)
 
+void tarjanAlgorithm(vector<vector<Edge>>& Graph, vector<bool> &visited, int curr, int parent, vector<int> &dt, vector<int> &ldt, int time){
+    visited[curr] = true;
+    dt[curr] = ldt[curr] = ++time;
+  
+    for(Edge e : Graph[curr]){
+        if(e.des == parent) continue;
+
+        if(!visited[e.des]){
+            tarjanAlgorithm(Graph, visited, e.des, curr, dt, ldt, time);
+            ldt[curr] = min(ldt[curr], ldt[e.des]);
+
+            if(dt[curr] < ldt[e.des]){
+                cout << "Bridge Found : " << curr << " - " << e.des << endl;
+            }
+        } else {
+            ldt[curr] = min(ldt[curr], dt[e.des]);
+        }
+    }
+    
+   
+}
+
+int main(){
+    vector<vector<Edge>> Graph(6);
+    vector<bool> visited(6, false);
+    vector<int> dt(6, 0);
+    vector<int> ldt(6, 0);
+    int time = 0;
+    Graph[0].push_back(Edge(0,1));
+    Graph[0].push_back(Edge(0,2));
+    Graph[0].push_back(Edge(0,3));
+
+    Graph[1].push_back(Edge(1,0));
+    Graph[1].push_back(Edge(1,2));
+
+    Graph[2].push_back(Edge(2,0));
+    Graph[2].push_back(Edge(2,1));
+
+    Graph[3].push_back(Edge(3,0));
+    Graph[3].push_back(Edge(3,4));
+    Graph[3].push_back(Edge(3,5));
+
+    Graph[4].push_back(Edge(4,3));
+    Graph[4].push_back(Edge(4,5));
+
+    Graph[5].push_back(Edge(5,3));
+    Graph[5].push_back(Edge(5,4));
+
+
+    tarjanAlgorithm(Graph, visited, 0, -1, dt, ldt, time);
+}
+
+
+//             Articulation Point in Graph 

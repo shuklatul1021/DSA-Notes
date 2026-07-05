@@ -8,77 +8,66 @@ class Edge {
 public:
     int src;
     int des;
-    int weight;
-    Edge(int s, int d, int w){
+    Edge(int s, int d){
         this->src = s;
         this->des = d;
-        this->weight = w;
     }
 };
 
-class Pair{
-public:
-    int node;
-    int dist;
-    Pair(int n, int d){
-        this->node = n;
-        this->dist = d;
-    }
+/**
+ * Articulation Points in Graph (Tarjan's Algorithm)
+ * 
+ * 
+ */
 
-    bool operator<(const Pair& ot) const {
-        return dist > ot.dist;
-    }
-};
+void ArticulationAlgorithm(vector<vector<Edge>>& Graph, vector<bool> &visited, int curr, int parent, vector<int> &dt, vector<int> &ldt, int time){
+    visited[curr] = true;
+    dt[curr] = ldt[curr] = ++time;
+  
+    for(Edge e : Graph[curr]){
+        if(e.des == parent) continue;-+*
 
+        if(!visited[e.des]){
+            ArticulationAlgorithm(Graph, visited, e.des, curr, dt, ldt, time);
+            ldt[curr] = min(ldt[curr], ldt[e.des]);
 
-void DjistraAlgorithum(vector<vector<Edge>>& Graph, int src, int n){
-    priority_queue<Pair> pq;
-    vector<bool> visited(n, false);
-    vector<int> destination(n, INT_MAX);
-
-    destination[src] = 0;
-    pq.push(Pair(src,0));
-
-    while(!pq.empty()){
-        Pair curr = pq.top();
-        pq.pop();
-
-        if (visited[curr.node]) continue;
-        visited[curr.node] = true;
-
-        for(Edge e : Graph[curr.node]){
-            int u = e.src;
-            int v = e.des;
-            int wei = e.weight;
-
-            if(destination[u] + wei < destination[v]){
-                destination[v] = destination[u] + wei;
-                pq.push(Pair(v, destination[v]));
+            if(dt[curr] < ldt[e.des]){
+                cout << "Articulation Point Found : " << curr << endl;
             }
+        } else {
+            ldt[curr] = min(ldt[curr], dt[e.des]);
         }
     }
-
-    cout<<"The Shortest : "<<endl;
-    for(int i = 0; i < n; i++){
-        cout<<destination[i]<<" ";
-    }cout<<endl;
+    
+   
 }
 
 int main(){
     vector<vector<Edge>> Graph(6);
+    vector<bool> visited(6, false);
+    vector<int> dt(6, 0);
+    vector<int> ldt(6, 0);
+    int time = 0;
+    Graph[0].push_back(Edge(0,1));
+    Graph[0].push_back(Edge(0,2));
+    Graph[0].push_back(Edge(0,3));
 
-    Graph[0].push_back(Edge(0,1,2));
-    Graph[0].push_back(Edge(0,2,4));
+    Graph[1].push_back(Edge(1,0));
+    Graph[1].push_back(Edge(1,2));
 
-    Graph[1].push_back(Edge(1,3,7));
-    Graph[1].push_back(Edge(1,2,1));
+    Graph[2].push_back(Edge(2,0));
+    Graph[2].push_back(Edge(2,1));
 
-    Graph[2].push_back(Edge(2,4,3));
+    Graph[3].push_back(Edge(3,0));
+    Graph[3].push_back(Edge(3,4));
+    Graph[3].push_back(Edge(3,5));
 
-    Graph[3].push_back(Edge(3,5,1));
+    Graph[4].push_back(Edge(4,3));
+    Graph[4].push_back(Edge(4,5));
 
-    Graph[4].push_back(Edge(4,3,2));
-    Graph[4].push_back(Edge(4,5,5));
+    Graph[5].push_back(Edge(5,3));
+    Graph[5].push_back(Edge(5,4));
 
-    DjistraAlgorithum(Graph,0,6);
+
+    ArticulationAlgorithm(Graph, visited, 0, -1, dt, ldt, time);
 }
