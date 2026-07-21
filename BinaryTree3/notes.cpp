@@ -149,7 +149,6 @@ public:
             if (path1[i] != path2[i])
             {
                 break;
-                ;
             }
         }
         return path1[i - 1];
