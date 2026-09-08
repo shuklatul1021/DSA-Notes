@@ -72,6 +72,13 @@ int main()
  */
 
 // Pre-Order Traversal
+/**
+ *          5
+ *        /   \
+ *       3     7   
+ *     / \    / \
+ *    2   4  6   8
+ */
 void pre_order(Node *root)
 {
     if (root == NULL)
@@ -169,6 +176,14 @@ int count_node(Node *node)
     int right_height = count_node(node->right);
     return left_height + right_height + 1;
 }
+
+/**
+ *          5
+ *        /   \
+ *       3     7   
+ *     / \    / \
+ *    2   4  6   8
+ */
 
 // Sum Of Nodes In Tree
 int sum_node(Node *node)

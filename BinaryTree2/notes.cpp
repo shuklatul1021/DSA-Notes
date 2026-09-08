@@ -85,7 +85,7 @@ public:
         int right_diameter = diameter_of_tree(root->right);
         int rightHt = height(root->right);
 
-        int self_dia = leftHt + rightHt + 1;
+        int self_dia = leftHt + rightHt;
 
         return max(self_dia, max(right_diameter, left_diameter));
     }

@@ -68,7 +68,7 @@ int main()
  *      3       4
  *    /   \
  *   5       6
- *
+ *                                              
  * Array Representation Of The Above Heap : [2, 3, 4, 5, 6]
  *
  * Property Of The Heap :
