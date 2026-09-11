@@ -71,9 +71,7 @@ int catalan_number_rec(int n) {
     if (n <= 1) {
         return 1;
     }
-    /**
-     * 
-     */
+
     int result = 0;
     for (int i = 0; i < n; i++) {
         result += catalan_number_rec(i) * catalan_number_rec(n - i - 1);

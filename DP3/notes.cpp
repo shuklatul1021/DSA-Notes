@@ -4,11 +4,9 @@
 using namespace std;
 /**
  * Rod Cutting Problem
- * Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces.
- * 
- */
-
-
+ * Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. 
+ * Determine the maximum value obtainable by cutting up the rod and selling the pieces.
+*/
 void dp_print(vector<vector<int>>& dp){
     for(int i = 0; i < dp.size(); i++){
         for(int j=0; j < dp[0].size(); j++){

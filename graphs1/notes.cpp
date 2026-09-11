@@ -629,7 +629,7 @@ int main(void){
  * Connected
  * Weighted
  */
-class Pair{
+class Pair {
 public:
     int node;
     int cost;
