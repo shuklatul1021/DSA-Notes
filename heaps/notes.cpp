@@ -49,9 +49,9 @@ int main()
  *      Complete Binary Tree Is A Binary Tree In Which Every Level, Except Possibly The Last, Is Completely Filled, And All Nodes Are As Far Left As Possible.
  * Heap Is A Complete Binary Tree Which Satisfies The Heap Property
  * Max Heap : A Binary Tree In Which Every Node Is Greater Than Or Equal To Its Children
- *              Children >= Parent
- * Min Heap : A Binary Tree In Which Every Node Is Less Than Or Equal To Its Children
  *              Children <= Parent
+ * Min Heap : A Binary Tree In Which Every Node Is Less Than Or Equal To Its Children
+ *              Children >= Parent
  */
 /**
  * IMPORTANT NOTE :
@@ -92,7 +92,7 @@ int main()
  *
  * Step 2 : Compare The Inserted Element With Its Parent And Swap If The Inserted Element Is Greater Than Its Parent (For Max Heap) Or Less Than Its Parent (For Min Heap)
  *          arr = [2, 3, 4, 5, 10, 1] -> Compare 1 With Its Parent 4 -> Swap -> arr = [2, 3, 1, 5, 10, 4] -> Compare 1 With Its Parent 3 -> Swap -> arr = [2, 1, 3, 5, 10, 4] -> Compare 1 With Its Parent 2 -> Swap -> arr = [1, 2, 3, 5, 10, 4]
- *          Find The Parent Index : (i-1)/2
+ *          Find The Parent Index : (i-1) /2
  *          And Compare And If Smaller Than Parent Then Swap
  *
  */
@@ -132,14 +132,19 @@ void Heapify(int i, vector<int> &heap_array)
     int left = 2 * i + 1;
     int right = 2 * i + 2;
     int minidx = i;
-    if (left < heap_array.size() && heap_array[minidx] > heap_array[right])
+    if (right < heap_array.size() && heap_array[minidx] > heap_array[right])
     {
         minidx = right;
+    }
+    if (left < heap_array.size() && heap_array[minidx] > heap_array[left])
+    {
+        minidx = left;
     }
 
     if (minidx != i)
     {
         swap(heap_array[i], heap_array[minidx]);
+        Heapify(minidx, heap_array);
     }
 }
 
@@ -175,11 +180,10 @@ void Heapify(int i, vector<int> &heap_array, int n)
         maxidx = right;
     }
 
-    if (maxidx != i)
-    {
+    if (maxidx != i) {
         swap(heap_array[i], heap_array[maxidx]);
         Heapify(maxidx, heap_array, n);
-    }
+    } 
 }
 
 void heap_sort(vector<int> &arr_vec)

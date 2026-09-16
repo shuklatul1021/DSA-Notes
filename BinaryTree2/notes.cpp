@@ -109,15 +109,20 @@ public:
     // Question : 2 -> Find Subtree of another Tree
     bool isIdentical(Node *root, Node *sub_tree)
     {
-        if (root == NULL && sub_tree == NULL)
+        if (root == NULL && sub_tree == NULL){
             return true;
-        else if (root == NULL || sub_tree == NULL || root->data != sub_tree->data)
+        }
+        else if (root == NULL || sub_tree == NULL || root->data != sub_tree->data){
             return false;
-
-        if (!isIdentical(root->left, sub_tree->left))
+        }
+        if (!isIdentical(root->left, sub_tree->left)){
             return false;
-        if (!isIdentical(root->right, sub_tree->right))
+        }
+            
+        if (!isIdentical(root->right, sub_tree->right)){
             return false;
+        }
+        
         return true;
     }
 

@@ -116,6 +116,7 @@ public:
         newNode->next = head;
         head = newNode;
     }
+    
     void InsertingAtTail(int val)
     {
         Node *newNode = new Node(val);

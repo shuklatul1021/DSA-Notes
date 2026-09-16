@@ -326,6 +326,28 @@ int main(void){
  */
 
 
+
+// Cycle Detection For Undirected Graph
+
+bool IscycleUndirectedDFS(vector<vector<Edge>>& Graph, int curr, vector<bool>& visited, int parent){
+    visited[curr] = true;
+    for(Edge e : Graph[curr]){
+        if(!visited[e.dest]){
+            if(IscycleUndirectedDFS(Graph,e.dest, visited, curr)){
+                return true;
+            }
+        }
+        else if(e.dest != parent){
+            return true;
+        }
+    }
+    return false;
+}
+
+int main(){
+    
+}
+
 // For Cycle Detection For Directed Graph
 bool ModifiedDFS(vector<vector<Edge>>& Graph, int curr, vector<bool>& visited, vector<bool>& recursion){
     visited[curr] = true;
