@@ -810,8 +810,6 @@ void tarjanAlgorithm(vector<vector<Edge>>& Graph, vector<bool> &visited, int cur
             ldt[curr] = min(ldt[curr], dt[e.des]);
         }
     }
-    
-   
 }
 
 int main(){

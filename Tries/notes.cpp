@@ -43,6 +43,8 @@ public:
     }
 };
 
+
+
 class BuildTrie {
 public:
     TrieNode* root;
@@ -50,6 +52,8 @@ public:
     BuildTrie() {
         root = new TrieNode();
     }
+    // like
+
     // Inserting A Word In Trie
     void insert(string word) {
         TrieNode* currentNode = root;
@@ -104,15 +108,119 @@ public:
      * Example 1:
         Input: words = ["zebra", "dog", "duck", "dove"]
         Output: ["z", "dog", "du", "dov"]
-    */
+    */  
 
-    
+
 };
 
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+class ModifiedTrieNode {
+public:
+    ModifiedTrieNode* children[26]; // Assuming only lowercase letters a-z
+    bool isEndOfWord;
+    int frequency; // Frequency of the word ending at this node
+
+    ModifiedTrieNode() {
+        frequency = 1;
+        isEndOfWord = false;
+        for (int i = 0; i < 26; i++) {
+            children[i] = nullptr;
+        }
+    }
+};
+
+class ModifiedBuildTrie {
+public:
+    ModifiedTrieNode* root;
+
+    ModifiedBuildTrie() {
+        root = new ModifiedTrieNode();
+        root->frequency = -1; // Initialize root frequency to -1 since it doesn't represent any word
+    }
+
+    // Inserting A Word In Trie
+    void insert(string word) {
+        ModifiedTrieNode* currentNode = root;
+        for (char c : word) {
+            int index = c - 'a';
+            if (currentNode->children[index] == nullptr) {
+                currentNode->children[index] = new ModifiedTrieNode();
+            } else {
+                currentNode->children[index]->frequency++; // Increment frequency for the prefix
+            }
+            currentNode = currentNode->children[index];
+        } 
+        currentNode->isEndOfWord = true;
+    }
+
+    // Searching For A Word In Trie
+    void findPrefix(ModifiedTrieNode* currentNode, string ans) {
+        if (currentNode == nullptr) {
+            return;
+        }
+        if(currentNode->frequency == 1) {
+            cout << ans << endl;
+            return;
+        }
+        for(int i = 0; i < 26; i++) {
+            if (currentNode->children[i] != nullptr) {
+                ans += (char)(i + 'a');
+                findPrefix(currentNode->children[i], ans);
+                ans.pop_back(); // Backtrack
+            }
+        }   
+    }
+
+
+    // Need Revision
+    int countUniqueSubstrings(ModifiedTrieNode* currentNode) {
+        if (currentNode == nullptr) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < 26; i++) {
+            if (currentNode->children[i] != nullptr) {
+                count += countUniqueSubstrings(currentNode->children[i]);
+            }
+        }
+        return count + 1; // Count the current node as a unique substring
+    }
+
+    
+    void longestWordAllPrefix(string tmp, ModifiedTrieNode* current) {
+        if(current == nullptr){
+            return;
+        }
+        
+        for(int i = 0; i < 26; i++){
+            ModifiedTrieNode* child = current->children[i];
+            if(child != nullptr && child->isEndOfWord == true){
+                tmp.push_back('a' + i);
+                if (tmp.length() > ans.length() ||
+                    (tmp.length() == ans.length() && tmp < ans)) {
+                    ans = tmp;
+                }
+                longestWordAllPrefix(tmp, child);
+                tmp.pop_back();
+            }
+        }
+    }
+};
+
+
+
 int main(){
-    vector<string> str = {"i", "like", "sam", "samsung", "mobile", "ice", "cream", "icecream"};
-    BuildTrie trie;
+    vector<string> str = {"zebra", "dog", "duck", "dove"};
+    ModifiedBuildTrie trie;
     for (const string& word : str) {
         trie.insert(word);
     }
+    trie.findPrefix(trie.root, "");  
 }
+
+
+

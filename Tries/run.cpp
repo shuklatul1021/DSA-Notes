@@ -1,62 +1,73 @@
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 
-class TrieNode {
+class ModifiedTrieNode {
 public:
-    TrieNode* children[26]; // Assuming only lowercase letters a-z
+    ModifiedTrieNode* children[26]; // Assuming only lowercase letters a-z
     bool isEndOfWord;
-    int frequency; 
 
-    TrieNode() {
+    ModifiedTrieNode() {
         isEndOfWord = false;
         for (int i = 0; i < 26; i++) {
             children[i] = nullptr;
         }
-        frequency = 1;
     }
 };
 
-class BuildTrie {
+class ModifiedBuildTrie {
 public:
-    TrieNode* root;
+    ModifiedTrieNode* root;
+    string ans;
 
-    BuildTrie() {
-        root = new TrieNode();
+    ModifiedBuildTrie() {
+        root = new ModifiedTrieNode();
+        ans = ""; // Initialize ans to an empty string
     }
 
+    // Inserting A Word In Trie
     void insert(string word) {
-        TrieNode* currentNode = root;
+        ModifiedTrieNode* currentNode = root;
         for (char c : word) {
             int index = c - 'a';
             if (currentNode->children[index] == nullptr) {
-                currentNode->children[index] = new TrieNode();   
-            } else {
-                currentNode->children[index]->frequency++;
+                currentNode->children[index] = new ModifiedTrieNode();
             }
             currentNode = currentNode->children[index];
-        }
+        } 
         currentNode->isEndOfWord = true;
     }
-
-
-    vector<string> prefix_problem(vector<string>& words) {
-        vector<string> result;
+ 
+    void longestWordAllPrefix(string tmp, ModifiedTrieNode* current) {
+        if(current == nullptr){
+            return;
+        }
         
+        for(int i = 0; i < 26; i++){
+            ModifiedTrieNode* child = current->children[i];
+            if(child != nullptr && child->isEndOfWord == true){
+                tmp.push_back('a' + i);
+                if (tmp.length() > ans.length() ||
+                    (tmp.length() == ans.length() && tmp < ans)) {
+                    ans = tmp;
+                }
+                longestWordAllPrefix(tmp, child);
+                tmp.pop_back();
+            }
+        }
     }
 };
 
 
+
 int main(){
-    vector<string> str = {"zebra", "dog", "duck", "dove"};
-    BuildTrie trie;
+    vector<string> str = {"a", "ap", "app", "appl", "apply", "apple"};
+    ModifiedBuildTrie trie;
     for (const string& word : str) {
         trie.insert(word);
     }
-    vector<string> prefixes = trie.prefix_problem(str);
-    for (const string& prefix : prefixes) {
-        cout << prefix << " ";
-    }
-    return 0;
+    trie.longestWordAllPrefix("", trie.root);
+    cout << "Longest word with all prefixes present: " << trie.ans << endl;
 }
