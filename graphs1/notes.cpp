@@ -570,23 +570,22 @@ int main(void){
 //               Shortest Path Algorithum (BellmanFord Algorithm)
 /**
  * It Can Work Solve The Problem Of Dijkstra's Algorithm of Negative Failure
- * Dynamic Programming Algorithum`
+ * Dynamic Programming Algorithum
  * Time Complexcity : O(V.E)
  */
 
 void BellmanFordAlgorithm(vector<vector<Edge>>& Graph, int src,int n){
     vector<int> distance(n, INT_MAX);
     distance[src] = 0;
-    for(int k=0; k<n-1; k++){
-        for(int i=0; i<n; i++){
-            for(Edge e : Graph[i]){
-                int u = e.src;
-                int v = e.dest;
-                int w = e.weight;
-                //Relexation Step
-                if(distance[u] != INT_MAX && distance[u] + w < distance[v]){
-                    distance[v] = distance[u] + w;
-                }
+    
+    for(int i=0; i<n; i++){
+        for(Edge e : Graph[i]){
+            int u = e.src;
+            int v = e.dest;
+            int w = e.weight;
+            //Relexation Step
+            if(distance[u] != INT_MAX && distance[u] + w < distance[v]){
+                distance[v] = distance[u] + w;
             }
         }
     }
@@ -637,6 +636,29 @@ int main(void){
     BellmanFordAlgorithm(Graph,0,n);
 }
 
+int chepestFlightPrice(vector<vector<Edge>>& g, int n, int src, int des, int k){
+    queue<Pair> pq;
+    pq.push(Pair(src, 0, 0));
+    vector<int> distance(n, INT_MAX);
+    distance[src] = 0;
+
+    while(!pq.empty()){
+        Pair curr = pq.front();
+        pq.pop();
+        if(curr.stopcount > k){
+            break;
+        }
+        for(Edge e : g[curr.node]){
+            if(distance[e.src] != INT_MAX && curr.dis + e.weight < distance[e.dest] && curr.stopcount <= k){
+                distance[e.dest] = curr.dis + e.weight;
+                pq.push(Pair(e.dest, distance[e.dest], curr.stopcount + 1));
+            }
+        }
+    }
+
+    return distance[des] == INT_MAX ? -1 : distance[des];
+}
+
 
 
 //              MINIMUM SAPANING TREE
@@ -683,6 +705,26 @@ void PrimsAlgorithm(vector<vector<Edge>>& Graph,int n){
             }
         }
     }
+    cout<<finalCost<<endl;
+}
+
+class PriorityQueueEdge {
+public:
+    int src;
+    int dest;
+    int weight;
+    PriorityQueueEdge(int s, int d, int w) {
+        src = s;
+        dest = d;
+        weight = w;
+    }
+    bool operator<(const PriorityQueueEdge& other) const {
+        return weight > other.weight; // For min-heap
+    }
+}
+
+void kruskalAlgorithm(vector<vector<Edge>>& Graph, int n){
+    
     cout<<finalCost<<endl;
 }
 

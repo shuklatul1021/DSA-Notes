@@ -37,10 +37,11 @@ public:
     }
 
     int query(int node, int start, int end, int l, int r) {
-        if (r < start || end < l) {
+        if (r <= start || l >= end) {
             return 0; // Out of range
         }
-        if (l <= start && end <= r) {
+
+        if (start >= l && end <= r) {
             return tree[node]; // Current segment is fully within range
         }
         int mid = (start + end) / 2;
@@ -58,10 +59,13 @@ public:
 };
 
 int main() {
-    vector<int> arr = {1, 3, 5, 7, 9, 11};
+    vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8};
     SegementTree st(arr.size());
     st.build(arr, 0, 0, arr.size() - 1);
     cout << "Segment Tree: ";
+    st.printTree();
+    cout << "Segment Tree After Update: ";
+    st.update(0, 0, arr.size() - 1, 2, 2); // Update index 3 to value 10
     st.printTree();
     return 0;
 }

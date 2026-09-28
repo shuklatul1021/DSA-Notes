@@ -1,57 +1,78 @@
 #include <iostream>
 #include <climits>
-#include <stack>
 #include <queue>
 using namespace std;
 
 class Edge {
 public:
     int src;
-    int des;
-    Edge(int s, int d){
-        this->src = s;
-        this->des = d;
+    int dest;
+    int weight;
+    Edge(int source, int destination, int wei){
+        src = source;
+        dest = destination;
+        weight = wei;
     }
 };
 
-void tarjanAlgorithm(vector<vector<Edge>>& Graph, vector<bool> &visited, int curr, int parent, vector<int> &dt, vector<int> &ldt, int time){
-    visited[curr] = true;
-    dt[curr] = ldt[curr] = ++time;
-  
-    for(Edge e : Graph[curr]){
-        if(e.des == parent) continue;
+class CityPair {
+public:
+    int node;
+    int dis;
+    CityPair(int n, int d){
+        node = n;
+        dis = d;
+    }
 
-        if(!visited[e.des]){
-            tarjanAlgorithm(Graph, visited, e.des, curr, dt, ldt, time);
-            ldt[curr] = min(ldt[curr], ldt[e.des]);
+    bool operator<(const CityPair& other) const {
+        return dis > other.dis;
+    }
+};
 
-            if(dt[curr] < ldt[e.des]){
-                cout << "Bridge Found : " << curr << " - " << e.des << endl;
+int minimum_cost_connect_cities(vector<vector<Edge>>& g, int n){
+    priority_queue<CityPair> pq;
+    vector<bool> visited(n,false);
+    int finalCost = 0;
+    pq.push(CityPair(0,0));
+
+    while(!pq.empty()){
+        CityPair curr = pq.top();
+        pq.pop();
+        if(visited[curr.node]) continue;
+        visited[curr.node] = true;
+        finalCost += curr.dis;
+
+        for(Edge e: g[curr.node]){
+            if(!visited[e.dest]){
+                pq.push(CityPair(e.dest, e.weight));
             }
-        } else {
-            ldt[curr] = min(ldt[curr], dt[e.des]);
         }
     }
+
+    return finalCost;
 }
 
-int main(){
-    vector<vector<Edge>> Graph(4);
-    vector<bool> visited(4, false);
-    vector<int> dt(4, 0);
-    vector<int> ldt(4, 0);
-    int time = 0;
-    Graph[0].push_back(Edge(0,1));
-    Graph[0].push_back(Edge(0,2));
-
-    Graph[1].push_back(Edge(1,0));
-    Graph[1].push_back(Edge(1,2));
-    Graph[1].push_back(Edge(1,3));
-
-    Graph[2].push_back(Edge(2,0));
-    Graph[2].push_back(Edge(2,1));
-
-    Graph[3].push_back(Edge(3,1));
+int kruskalAlgo()
 
 
-    tarjanAlgorithm(Graph, visited, 0, -1, dt, ldt, time);
+int main(void){
+    int n = 5;
+    vector<vector<int>> cities = {
+        {0, 1, 2, 3, 4},
+        {1, 0, 5, 0, 7},
+        {2, 5, 0, 6, 0},
+        {3, 0, 6, 0, 0},
+        {4, 7, 0, 0, 0}
+    };
+    vector<vector<Edge>> Graph(n);
+
+    for(int i = 0; i < cities.size(); i++){
+        for(int j = 0; j < cities[0].size(); j++){
+            if(cities[i][j] != 0){
+                Graph[i].push_back(Edge(i, j, cities[i][j]));
+            }
+        }
+    }
+    
+    cout << minimum_cost_connect_cities(Graph, n) << endl;
 }
